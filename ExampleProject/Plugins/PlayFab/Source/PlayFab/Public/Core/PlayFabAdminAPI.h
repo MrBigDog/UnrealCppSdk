@@ -26,11 +26,13 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FCreatePlayerSharedSecretDelegate, const AdminModels::FCreatePlayerSharedSecretResult&);
         DECLARE_DELEGATE_OneParam(FCreatePlayerStatisticDefinitionDelegate, const AdminModels::FCreatePlayerStatisticDefinitionResult&);
         DECLARE_DELEGATE_OneParam(FDeleteContentDelegate, const AdminModels::FBlankResult&);
+        DECLARE_DELEGATE_OneParam(FDeleteMasterPlayerAccountDelegate, const AdminModels::FDeleteMasterPlayerAccountResult&);
         DECLARE_DELEGATE_OneParam(FDeletePlayerDelegate, const AdminModels::FDeletePlayerResult&);
         DECLARE_DELEGATE_OneParam(FDeletePlayerSharedSecretDelegate, const AdminModels::FDeletePlayerSharedSecretResult&);
         DECLARE_DELEGATE_OneParam(FDeleteStoreDelegate, const AdminModels::FDeleteStoreResult&);
         DECLARE_DELEGATE_OneParam(FDeleteTaskDelegate, const AdminModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FDeleteTitleDelegate, const AdminModels::FDeleteTitleResult&);
+        DECLARE_DELEGATE_OneParam(FExportMasterPlayerDataDelegate, const AdminModels::FExportMasterPlayerDataResult&);
         DECLARE_DELEGATE_OneParam(FGetActionsOnPlayersInSegmentTaskInstanceDelegate, const AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult&);
         DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const AdminModels::FGetAllSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const AdminModels::FGetCatalogItemsResult&);
@@ -42,6 +44,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetDataReportDelegate, const AdminModels::FGetDataReportResult&);
         DECLARE_DELEGATE_OneParam(FGetMatchmakerGameInfoDelegate, const AdminModels::FGetMatchmakerGameInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetMatchmakerGameModesDelegate, const AdminModels::FGetMatchmakerGameModesResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayedTitleListDelegate, const AdminModels::FGetPlayedTitleListResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerIdFromAuthTokenDelegate, const AdminModels::FGetPlayerIdFromAuthTokenResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerProfileDelegate, const AdminModels::FGetPlayerProfileResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const AdminModels::FGetPlayerSegmentsResult&);
@@ -185,6 +188,11 @@ namespace PlayFab
         // Delete a content file from the title. When deleting a file that does not exist, it returns success.
         bool DeleteContent(AdminModels::FDeleteContentRequest& request, const FDeleteContentDelegate& SuccessDelegate = FDeleteContentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Removes a master player account entirely from all titles and deletes all associated data
+         * Deletes all data associated with the master player account, including data from all titles the player has played, such as statistics, custom data, inventory, purchases, virtual currency balances,         characters, group memberships, publisher data, credential data, account linkages, friends list and PlayStream event history. Removes the player from all leaderboards and player search indexes.         Note, this API queues the player for deletion and returns a receipt immediately. Record the receipt ID for future reference. It may take some time before all player data is fully deleted.         Upon completion of the deletion, an email will be sent to the notification email address configured for the title confirming the deletion.         Until the player data is fully deleted, attempts to recreate the player with the same user account in the same title will fail with the 'AccountDeleted' error.         It is highly recommended to know the impact of the deletion by calling GetPlayedTitleList, before calling this API.
+         */
+        bool DeleteMasterPlayerAccount(AdminModels::FDeleteMasterPlayerAccountRequest& request, const FDeleteMasterPlayerAccountDelegate& SuccessDelegate = FDeleteMasterPlayerAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Removes a user's player account from a title and deletes all associated data
          * Deletes all data associated with the player, including statistics, custom data, inventory, purchases, virtual currency balances,         characters and shared group memberships. Removes the player from all leaderboards and player search indexes. Does not delete PlayStream event history associated with the player.         Does not delete the publisher user account that created the player in the title nor associated data such as username, password, email address, account linkages, or friends list.         Note, this API queues the player for deletion and returns immediately. It may take several minutes or more before all player data is fully deleted.         Until the player data is fully deleted, attempts to recreate the player with the same user account in the same title will fail with the 'AccountDeleted' error.
          */
@@ -211,6 +219,11 @@ namespace PlayFab
          */
 
         bool DeleteTitle(const FDeleteTitleDelegate& SuccessDelegate = FDeleteTitleDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Exports all associated data of a master player account
+         * Exports all data associated with the master player account, including data from all titles the player has played, such as statistics, custom data, inventory, purchases, virtual currency balances,         characters, group memberships, publisher data, credential data, account linkages, friends list and PlayStream event history.         Note, this API queues the player for export and returns a receipt immediately. Record the receipt ID for future reference. It may take some time before the export is available for download.         Upon completion of the export, an email containing the URL to download the export dump will be sent to the notification email address configured for the title.
+         */
+        bool ExportMasterPlayerData(AdminModels::FExportMasterPlayerDataRequest& request, const FExportMasterPlayerDataDelegate& SuccessDelegate = FExportMasterPlayerDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get information about a ActionsOnPlayersInSegment task instance.
          * The result includes detail information that's specific to an ActionsOnPlayersInSegment task. To get a list of task instances with generic basic information, use GetTaskInstances.
@@ -258,6 +271,11 @@ namespace PlayFab
          * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts.
          */
         bool GetMatchmakerGameModes(AdminModels::FGetMatchmakerGameModesRequest& request, const FGetMatchmakerGameModesDelegate& SuccessDelegate = FGetMatchmakerGameModesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get the list of titles that the player has played
+         * Useful for identifying titles of which the player's data will be deleted by DeleteMasterPlayer.
+         */
+        bool GetPlayedTitleList(AdminModels::FGetPlayedTitleListRequest& request, const FGetPlayedTitleListDelegate& SuccessDelegate = FGetPlayedTitleListDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Gets a player's ID from an auth token.
          * Gets a player ID from an auth token. The token expires after 30 minutes and cannot be used to look up a player when expired.
@@ -615,11 +633,13 @@ namespace PlayFab
         void OnCreatePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreatePlayerStatisticDefinitionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerStatisticDefinitionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteContentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteContentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeleteMasterPlayerAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteMasterPlayerAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeletePlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeletePlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeletePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeletePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteStoreResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteStoreDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteTitleResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTitleDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnExportMasterPlayerDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExportMasterPlayerDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetActionsOnPlayersInSegmentTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetActionsOnPlayersInSegmentTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -631,6 +651,7 @@ namespace PlayFab
         void OnGetDataReportResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetDataReportDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetMatchmakerGameInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetMatchmakerGameInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetMatchmakerGameModesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetMatchmakerGameModesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayedTitleListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayedTitleListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerIdFromAuthTokenResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerIdFromAuthTokenDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerProfileResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerProfileDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

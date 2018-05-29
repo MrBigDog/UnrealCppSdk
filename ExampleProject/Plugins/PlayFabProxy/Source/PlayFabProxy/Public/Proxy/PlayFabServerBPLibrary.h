@@ -532,10 +532,12 @@ public:
             , FString InFriendPlayFabId
             , FBPServerUserGameCenterInfo InGameCenterInfo
             , FBPServerPlayerProfileModel InProfile
+            , FBPServerUserPsnInfo InPSNInfo
             , FBPServerUserSteamInfo InSteamInfo
             , TArray<FString> InTags
             , FString InTitleDisplayName
             , FString InUsername
+            , FBPServerUserXboxInfo InXboxInfo
         );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
         static void BreakBPServerFriendInfo(
@@ -545,10 +547,12 @@ public:
             , FString& OutFriendPlayFabId
             , FBPServerUserGameCenterInfo& OutGameCenterInfo
             , FBPServerPlayerProfileModel& OutProfile
+            , FBPServerUserPsnInfo& OutPSNInfo
             , FBPServerUserSteamInfo& OutSteamInfo
             , TArray<FString>& OutTags
             , FString& OutTitleDisplayName
             , FString& OutUsername
+            , FBPServerUserXboxInfo& OutXboxInfo
 );
 
     // GetAllSegmentsRequest
@@ -674,6 +678,7 @@ public:
             , FString InStatisticName
             , bool InUseSpecificVersion
             , int32 InVersion
+            , FString InXboxToken
         );
 
     // GetFriendsListRequest
@@ -683,6 +688,7 @@ public:
             , bool InIncludeSteamFriends
             , FString InPlayFabId
             , FBPServerPlayerProfileViewConstraints InProfileConstraints
+            , FString InXboxToken
         );
 
     // GetFriendsListResult

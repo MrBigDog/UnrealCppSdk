@@ -853,6 +853,26 @@ public:
     PlayFab::AdminModels::FDeleteContentRequest Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminDeleteMasterPlayerAccountRequest"))
+struct FBPAdminDeleteMasterPlayerAccountRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminDeleteMasterPlayerAccountRequest() {};
+    FBPAdminDeleteMasterPlayerAccountRequest(PlayFab::AdminModels::FDeleteMasterPlayerAccountRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FDeleteMasterPlayerAccountRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteMasterPlayerAccountResult"))
+struct FBPAdminDeleteMasterPlayerAccountResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminDeleteMasterPlayerAccountResult() {};
+    FBPAdminDeleteMasterPlayerAccountResult(PlayFab::AdminModels::FDeleteMasterPlayerAccountResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FDeleteMasterPlayerAccountResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminDeletePlayerRequest"))
 struct FBPAdminDeletePlayerRequest
 {
@@ -1005,7 +1025,8 @@ enum class EBPAdminEntityTypes : uint8
     EntityTypes_master_player_account UMETA(DisplayName = "master_player_account"),
     EntityTypes_title_player_account UMETA(DisplayName = "title_player_account"),
     EntityTypes_character UMETA(DisplayName = "character"),
-    EntityTypes_group UMETA(DisplayName = "group")
+    EntityTypes_group UMETA(DisplayName = "group"),
+    EntityTypes_service UMETA(DisplayName = "service")
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminExecuteCloudScriptResult"))
@@ -1016,6 +1037,26 @@ public:
     FBPAdminExecuteCloudScriptResult() {};
     FBPAdminExecuteCloudScriptResult(PlayFab::AdminModels::FExecuteCloudScriptResult InData) : Data(InData) {};
     PlayFab::AdminModels::FExecuteCloudScriptResult Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminExportMasterPlayerDataRequest"))
+struct FBPAdminExportMasterPlayerDataRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminExportMasterPlayerDataRequest() {};
+    FBPAdminExportMasterPlayerDataRequest(PlayFab::AdminModels::FExportMasterPlayerDataRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FExportMasterPlayerDataRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminExportMasterPlayerDataResult"))
+struct FBPAdminExportMasterPlayerDataResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminExportMasterPlayerDataResult() {};
+    FBPAdminExportMasterPlayerDataResult(PlayFab::AdminModels::FExportMasterPlayerDataResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FExportMasterPlayerDataResult Data;
 };
 
 UENUM(BlueprintType)
@@ -1236,6 +1277,26 @@ public:
     FBPAdminGetMatchmakerGameModesResult() {};
     FBPAdminGetMatchmakerGameModesResult(PlayFab::AdminModels::FGetMatchmakerGameModesResult InData) : Data(InData) {};
     PlayFab::AdminModels::FGetMatchmakerGameModesResult Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetPlayedTitleListRequest"))
+struct FBPAdminGetPlayedTitleListRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminGetPlayedTitleListRequest() {};
+    FBPAdminGetPlayedTitleListRequest(PlayFab::AdminModels::FGetPlayedTitleListRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FGetPlayedTitleListRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayedTitleListResult"))
+struct FBPAdminGetPlayedTitleListResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminGetPlayedTitleListResult() {};
+    FBPAdminGetPlayedTitleListResult(PlayFab::AdminModels::FGetPlayedTitleListResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FGetPlayedTitleListResult Data;
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetPlayerIdFromAuthTokenRequest"))
@@ -3138,6 +3199,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCheckLimitedEditionItemAvail
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerSharedSecretResultDelegate, const FBPAdminCreatePlayerSharedSecretResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerStatisticDefinitionResultDelegate, const FBPAdminCreatePlayerStatisticDefinitionResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreateTaskResultDelegate, const FBPAdminCreateTaskResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteMasterPlayerAccountResultDelegate, const FBPAdminDeleteMasterPlayerAccountResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerResultDelegate, const FBPAdminDeletePlayerResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerSharedSecretResultDelegate, const FBPAdminDeletePlayerSharedSecretResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteStoreResultDelegate, const FBPAdminDeleteStoreResult&, Result);
@@ -3145,6 +3207,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteTitleResultDelegate, c
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteUsersResultDelegate, const FBPAdminDeleteUsersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEmptyResultDelegate, const FBPAdminEmptyResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminExecuteCloudScriptResultDelegate, const FBPAdminExecuteCloudScriptResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminExportMasterPlayerDataResultDelegate, const FBPAdminExportMasterPlayerDataResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResultDelegate, const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetAllSegmentsResultDelegate, const FBPAdminGetAllSegmentsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetCatalogItemsResultDelegate, const FBPAdminGetCatalogItemsResult&, Result);
@@ -3156,6 +3219,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetContentUploadUrlResultDel
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetDataReportResultDelegate, const FBPAdminGetDataReportResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetMatchmakerGameInfoResultDelegate, const FBPAdminGetMatchmakerGameInfoResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetMatchmakerGameModesResultDelegate, const FBPAdminGetMatchmakerGameModesResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayedTitleListResultDelegate, const FBPAdminGetPlayedTitleListResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerIdFromAuthTokenResultDelegate, const FBPAdminGetPlayerIdFromAuthTokenResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerProfileResultDelegate, const FBPAdminGetPlayerProfileResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSegmentsResultDelegate, const FBPAdminGetPlayerSegmentsResult&, Result);

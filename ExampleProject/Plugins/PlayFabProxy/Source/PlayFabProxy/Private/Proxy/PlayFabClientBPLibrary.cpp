@@ -950,10 +950,12 @@ FBPClientFriendInfo UPFClientProxyLibrary::MakeBPClientFriendInfo(
     , FString InFriendPlayFabId
     , FBPClientUserGameCenterInfo InGameCenterInfo
     , FBPClientPlayerProfileModel InProfile
+    , FBPClientUserPsnInfo InPSNInfo
     , FBPClientUserSteamInfo InSteamInfo
     , TArray<FString> InTags
     , FString InTitleDisplayName
     , FString InUsername
+    , FBPClientUserXboxInfo InXboxInfo
 )
 {
     FBPClientFriendInfo Out = FBPClientFriendInfo();
@@ -962,10 +964,12 @@ FBPClientFriendInfo UPFClientProxyLibrary::MakeBPClientFriendInfo(
     Out.Data.FriendPlayFabId = InFriendPlayFabId;
     Out.Data.GameCenterInfo = MakeShareable(new PlayFab::ClientModels::FUserGameCenterInfo(InGameCenterInfo.Data));
     Out.Data.Profile = MakeShareable(new PlayFab::ClientModels::FPlayerProfileModel(InProfile.Data));
+    Out.Data.PSNInfo = MakeShareable(new PlayFab::ClientModels::FUserPsnInfo(InPSNInfo.Data));
     Out.Data.SteamInfo = MakeShareable(new PlayFab::ClientModels::FUserSteamInfo(InSteamInfo.Data));
     Out.Data.Tags = InTags;
     Out.Data.TitleDisplayName = InTitleDisplayName;
     Out.Data.Username = InUsername;
+    Out.Data.XboxInfo = MakeShareable(new PlayFab::ClientModels::FUserXboxInfo(InXboxInfo.Data));
 
     return Out;
 }
@@ -976,10 +980,12 @@ void UPFClientProxyLibrary::BreakBPClientFriendInfo(
     , FString& OutFriendPlayFabId
     , FBPClientUserGameCenterInfo& OutGameCenterInfo
     , FBPClientPlayerProfileModel& OutProfile
+    , FBPClientUserPsnInfo& OutPSNInfo
     , FBPClientUserSteamInfo& OutSteamInfo
     , TArray<FString>& OutTags
     , FString& OutTitleDisplayName
     , FString& OutUsername
+    , FBPClientUserXboxInfo& OutXboxInfo
 )
 {
     OutCurrentMatchmakerLobbyId = In.Data.CurrentMatchmakerLobbyId;
@@ -987,10 +993,12 @@ void UPFClientProxyLibrary::BreakBPClientFriendInfo(
     OutFriendPlayFabId = In.Data.FriendPlayFabId;
     if (In.Data.GameCenterInfo.IsValid()) { OutGameCenterInfo.Data = *In.Data.GameCenterInfo; }
     if (In.Data.Profile.IsValid()) { OutProfile.Data = *In.Data.Profile; }
+    if (In.Data.PSNInfo.IsValid()) { OutPSNInfo.Data = *In.Data.PSNInfo; }
     if (In.Data.SteamInfo.IsValid()) { OutSteamInfo.Data = *In.Data.SteamInfo; }
     OutTags = In.Data.Tags;
     OutTitleDisplayName = In.Data.TitleDisplayName;
     OutUsername = In.Data.Username;
+    if (In.Data.XboxInfo.IsValid()) { OutXboxInfo.Data = *In.Data.XboxInfo; }
 
 }
 
@@ -1370,6 +1378,7 @@ FBPClientGetFriendLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPCl
     , FString InStatisticName
     , bool InUseSpecificVersion
     , int32 InVersion
+    , FString InXboxToken
 )
 {
     FBPClientGetFriendLeaderboardAroundPlayerRequest Out = FBPClientGetFriendLeaderboardAroundPlayerRequest();
@@ -1381,6 +1390,7 @@ FBPClientGetFriendLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPCl
     Out.Data.StatisticName = InStatisticName;
     Out.Data.UseSpecificVersion = InUseSpecificVersion;
     Out.Data.Version = InVersion;
+    Out.Data.XboxToken = InXboxToken;
 
     return Out;
 }
@@ -1412,6 +1422,7 @@ FBPClientGetFriendLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetFrien
     , FString InStatisticName
     , bool InUseSpecificVersion
     , int32 InVersion
+    , FString InXboxToken
 )
 {
     FBPClientGetFriendLeaderboardRequest Out = FBPClientGetFriendLeaderboardRequest();
@@ -1423,6 +1434,7 @@ FBPClientGetFriendLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetFrien
     Out.Data.StatisticName = InStatisticName;
     Out.Data.UseSpecificVersion = InUseSpecificVersion;
     Out.Data.Version = InVersion;
+    Out.Data.XboxToken = InXboxToken;
 
     return Out;
 }
@@ -1432,12 +1444,14 @@ FBPClientGetFriendsListRequest UPFClientProxyLibrary::MakeBPClientGetFriendsList
     bool InIncludeFacebookFriends
     , bool InIncludeSteamFriends
     , FBPClientPlayerProfileViewConstraints InProfileConstraints
+    , FString InXboxToken
 )
 {
     FBPClientGetFriendsListRequest Out = FBPClientGetFriendsListRequest();
     Out.Data.IncludeFacebookFriends = InIncludeFacebookFriends;
     Out.Data.IncludeSteamFriends = InIncludeSteamFriends;
     Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ClientModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
+    Out.Data.XboxToken = InXboxToken;
 
     return Out;
 }

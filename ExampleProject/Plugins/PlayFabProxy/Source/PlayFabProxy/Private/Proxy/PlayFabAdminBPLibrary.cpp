@@ -945,6 +945,29 @@ FBPAdminDeleteContentRequest UPFAdminProxyLibrary::MakeBPAdminDeleteContentReque
     return Out;
 }
 
+// DeleteMasterPlayerAccountRequest
+FBPAdminDeleteMasterPlayerAccountRequest UPFAdminProxyLibrary::MakeBPAdminDeleteMasterPlayerAccountRequest(
+    FString InPlayFabId
+)
+{
+    FBPAdminDeleteMasterPlayerAccountRequest Out = FBPAdminDeleteMasterPlayerAccountRequest();
+    Out.Data.PlayFabId = InPlayFabId;
+
+    return Out;
+}
+
+// DeleteMasterPlayerAccountResult
+void UPFAdminProxyLibrary::BreakBPAdminDeleteMasterPlayerAccountResult(
+    const FBPAdminDeleteMasterPlayerAccountResult& In
+    , FString& OutJobReceiptId
+    , TArray<FString>& OutTitleIds
+)
+{
+    OutJobReceiptId = In.Data.JobReceiptId;
+    OutTitleIds = In.Data.TitleIds;
+
+}
+
 // DeletePlayerRequest
 FBPAdminDeletePlayerRequest UPFAdminProxyLibrary::MakeBPAdminDeletePlayerRequest(
     FString InPlayFabId
@@ -1120,6 +1143,27 @@ void UPFAdminProxyLibrary::BreakBPAdminExecuteCloudScriptResult(
     OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
     OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
     OutRevision = In.Data.Revision;
+
+}
+
+// ExportMasterPlayerDataRequest
+FBPAdminExportMasterPlayerDataRequest UPFAdminProxyLibrary::MakeBPAdminExportMasterPlayerDataRequest(
+    FString InPlayFabId
+)
+{
+    FBPAdminExportMasterPlayerDataRequest Out = FBPAdminExportMasterPlayerDataRequest();
+    Out.Data.PlayFabId = InPlayFabId;
+
+    return Out;
+}
+
+// ExportMasterPlayerDataResult
+void UPFAdminProxyLibrary::BreakBPAdminExportMasterPlayerDataResult(
+    const FBPAdminExportMasterPlayerDataResult& In
+    , FString& OutJobReceiptId
+)
+{
+    OutJobReceiptId = In.Data.JobReceiptId;
 
 }
 
@@ -1416,6 +1460,27 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
     {
         OutGameModes.Add(FBPAdminGameModeInfo(elem));
     }
+
+}
+
+// GetPlayedTitleListRequest
+FBPAdminGetPlayedTitleListRequest UPFAdminProxyLibrary::MakeBPAdminGetPlayedTitleListRequest(
+    FString InPlayFabId
+)
+{
+    FBPAdminGetPlayedTitleListRequest Out = FBPAdminGetPlayedTitleListRequest();
+    Out.Data.PlayFabId = InPlayFabId;
+
+    return Out;
+}
+
+// GetPlayedTitleListResult
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayedTitleListResult(
+    const FBPAdminGetPlayedTitleListResult& In
+    , TArray<FString>& OutTitleIds
+)
+{
+    OutTitleIds = In.Data.TitleIds;
 
 }
 

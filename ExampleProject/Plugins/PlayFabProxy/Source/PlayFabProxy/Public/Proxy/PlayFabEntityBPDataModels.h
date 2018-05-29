@@ -260,7 +260,8 @@ enum class EBPEntityEntityTypes : uint8
     EntityTypes_master_player_account UMETA(DisplayName = "master_player_account"),
     EntityTypes_title_player_account UMETA(DisplayName = "title_player_account"),
     EntityTypes_character UMETA(DisplayName = "character"),
-    EntityTypes_group UMETA(DisplayName = "group")
+    EntityTypes_group UMETA(DisplayName = "group"),
+    EntityTypes_service UMETA(DisplayName = "service")
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFEntityProxyLibrary.MakeBPEntityEntityWithLineage", HasNativeBreak = "PlayFabProxy.PFEntityProxyLibrary.BreakBPEntityEntityWithLineage"))

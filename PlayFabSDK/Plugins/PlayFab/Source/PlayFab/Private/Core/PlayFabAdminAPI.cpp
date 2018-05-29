@@ -382,6 +382,33 @@ void UPlayFabAdminAPI::OnDeleteContentResult(FHttpRequestPtr HttpRequest, FHttpR
     }
 }
 
+bool UPlayFabAdminAPI::DeleteMasterPlayerAccount(
+    AdminModels::FDeleteMasterPlayerAccountRequest& request,
+    const FDeleteMasterPlayerAccountDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::developerSecretKey.Len() == 0) {
+        UE_LOG(LogPlayFab, Error, TEXT("You must first set your PlayFab developerSecretKey to use this function (Unreal Settings Menu, or in C++ code)"));
+    }
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/DeleteMasterPlayerAccount")), request.toJSONString(), TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnDeleteMasterPlayerAccountResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnDeleteMasterPlayerAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteMasterPlayerAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FDeleteMasterPlayerAccountResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabAdminAPI::DeletePlayer(
     AdminModels::FDeletePlayerRequest& request,
     const FDeletePlayerDelegate& SuccessDelegate,
@@ -506,6 +533,33 @@ bool UPlayFabAdminAPI::DeleteTitle(
 void UPlayFabAdminAPI::OnDeleteTitleResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTitleDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FDeleteTitleResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::ExportMasterPlayerData(
+    AdminModels::FExportMasterPlayerDataRequest& request,
+    const FExportMasterPlayerDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::developerSecretKey.Len() == 0) {
+        UE_LOG(LogPlayFab, Error, TEXT("You must first set your PlayFab developerSecretKey to use this function (Unreal Settings Menu, or in C++ code)"));
+    }
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/ExportMasterPlayerData")), request.toJSONString(), TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnExportMasterPlayerDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnExportMasterPlayerDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExportMasterPlayerDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FExportMasterPlayerDataResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -803,6 +857,33 @@ bool UPlayFabAdminAPI::GetMatchmakerGameModes(
 void UPlayFabAdminAPI::OnGetMatchmakerGameModesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetMatchmakerGameModesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FGetMatchmakerGameModesResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::GetPlayedTitleList(
+    AdminModels::FGetPlayedTitleListRequest& request,
+    const FGetPlayedTitleListDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::developerSecretKey.Len() == 0) {
+        UE_LOG(LogPlayFab, Error, TEXT("You must first set your PlayFab developerSecretKey to use this function (Unreal Settings Menu, or in C++ code)"));
+    }
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/GetPlayedTitleList")), request.toJSONString(), TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnGetPlayedTitleListResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnGetPlayedTitleListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayedTitleListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FGetPlayedTitleListResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

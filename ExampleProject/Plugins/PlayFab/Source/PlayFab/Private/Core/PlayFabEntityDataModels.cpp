@@ -16,6 +16,7 @@ void PlayFab::EntityModels::writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWr
     case EntityTypestitle_player_account: writer->WriteValue(TEXT("title_player_account")); break;
     case EntityTypescharacter: writer->WriteValue(TEXT("character")); break;
     case EntityTypesgroup: writer->WriteValue(TEXT("group")); break;
+    case EntityTypesservice: writer->WriteValue(TEXT("service")); break;
     }
 }
 
@@ -35,6 +36,7 @@ EntityModels::EntityTypes PlayFab::EntityModels::readEntityTypesFromValue(const 
         _EntityTypesMap.Add(TEXT("title_player_account"), EntityTypestitle_player_account);
         _EntityTypesMap.Add(TEXT("character"), EntityTypescharacter);
         _EntityTypesMap.Add(TEXT("group"), EntityTypesgroup);
+        _EntityTypesMap.Add(TEXT("service"), EntityTypesservice);
 
     }
 

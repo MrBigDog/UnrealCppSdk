@@ -10,10 +10,10 @@
 
 // Api's
 #include "Core/PlayFabAdminAPI.h"
-#include "Core/PlayFabMatchmakerAPI.h"
-#include "Core/PlayFabServerAPI.h"
 #include "Core/PlayFabClientAPI.h"
 #include "Core/PlayFabEntityAPI.h"
+#include "Core/PlayFabMatchmakerAPI.h"
+#include "Core/PlayFabServerAPI.h"
 
 DEFINE_LOG_CATEGORY(LogPlayFab);
 
@@ -34,16 +34,16 @@ class FPlayFabModule : public IPlayFabModuleInterface
 
     FString GetTitleId() const override { return PlayFab::PlayFabSettings::titleId; };
     PlayFabAdminPtr GetAdminAPI() const override { return AdminAPI; };
-    PlayFabMatchmakerPtr GetMatchmakerAPI() const override { return MatchmakerAPI; };
-    PlayFabServerPtr GetServerAPI() const override { return ServerAPI; };
     PlayFabClientPtr GetClientAPI() const override { return ClientAPI; };
     PlayFabEntityPtr GetEntityAPI() const override { return EntityAPI; };
+    PlayFabMatchmakerPtr GetMatchmakerAPI() const override { return MatchmakerAPI; };
+    PlayFabServerPtr GetServerAPI() const override { return ServerAPI; };
 
     PlayFabAdminPtr AdminAPI;
-    PlayFabMatchmakerPtr MatchmakerAPI;
-    PlayFabServerPtr ServerAPI;
     PlayFabClientPtr ClientAPI;
     PlayFabEntityPtr EntityAPI;
+    PlayFabMatchmakerPtr MatchmakerAPI;
+    PlayFabServerPtr ServerAPI;
 };
 
 void FPlayFabModule::StartupModule()

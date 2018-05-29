@@ -511,6 +511,20 @@ public:
             FString InKey
         );
 
+    // DeleteMasterPlayerAccountRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+        static FBPAdminDeleteMasterPlayerAccountRequest MakeBPAdminDeleteMasterPlayerAccountRequest(
+            FString InPlayFabId
+        );
+
+    // DeleteMasterPlayerAccountResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+        static void BreakBPAdminDeleteMasterPlayerAccountResult(
+            const FBPAdminDeleteMasterPlayerAccountResult& In
+            , FString& OutJobReceiptId
+            , TArray<FString>& OutTitleIds
+);
+
     // DeletePlayerRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
         static FBPAdminDeletePlayerRequest MakeBPAdminDeletePlayerRequest(
@@ -614,6 +628,19 @@ public:
             , int32& OutMemoryConsumedBytes
             , float& OutProcessorTimeSeconds
             , int32& OutRevision
+);
+
+    // ExportMasterPlayerDataRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+        static FBPAdminExportMasterPlayerDataRequest MakeBPAdminExportMasterPlayerDataRequest(
+            FString InPlayFabId
+        );
+
+    // ExportMasterPlayerDataResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+        static void BreakBPAdminExportMasterPlayerDataResult(
+            const FBPAdminExportMasterPlayerDataResult& In
+            , FString& OutJobReceiptId
 );
 
     // GameModeInfo
@@ -781,6 +808,19 @@ public:
         static void BreakBPAdminGetMatchmakerGameModesResult(
             const FBPAdminGetMatchmakerGameModesResult& In
             , TArray<FBPAdminGameModeInfo>& OutGameModes
+);
+
+    // GetPlayedTitleListRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+        static FBPAdminGetPlayedTitleListRequest MakeBPAdminGetPlayedTitleListRequest(
+            FString InPlayFabId
+        );
+
+    // GetPlayedTitleListResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+        static void BreakBPAdminGetPlayedTitleListResult(
+            const FBPAdminGetPlayedTitleListResult& In
+            , TArray<FString>& OutTitleIds
 );
 
     // GetPlayerIdFromAuthTokenRequest

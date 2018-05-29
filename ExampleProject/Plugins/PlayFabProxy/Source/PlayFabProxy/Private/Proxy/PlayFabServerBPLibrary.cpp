@@ -965,10 +965,12 @@ FBPServerFriendInfo UPFServerProxyLibrary::MakeBPServerFriendInfo(
     , FString InFriendPlayFabId
     , FBPServerUserGameCenterInfo InGameCenterInfo
     , FBPServerPlayerProfileModel InProfile
+    , FBPServerUserPsnInfo InPSNInfo
     , FBPServerUserSteamInfo InSteamInfo
     , TArray<FString> InTags
     , FString InTitleDisplayName
     , FString InUsername
+    , FBPServerUserXboxInfo InXboxInfo
 )
 {
     FBPServerFriendInfo Out = FBPServerFriendInfo();
@@ -977,10 +979,12 @@ FBPServerFriendInfo UPFServerProxyLibrary::MakeBPServerFriendInfo(
     Out.Data.FriendPlayFabId = InFriendPlayFabId;
     Out.Data.GameCenterInfo = MakeShareable(new PlayFab::ServerModels::FUserGameCenterInfo(InGameCenterInfo.Data));
     Out.Data.Profile = MakeShareable(new PlayFab::ServerModels::FPlayerProfileModel(InProfile.Data));
+    Out.Data.PSNInfo = MakeShareable(new PlayFab::ServerModels::FUserPsnInfo(InPSNInfo.Data));
     Out.Data.SteamInfo = MakeShareable(new PlayFab::ServerModels::FUserSteamInfo(InSteamInfo.Data));
     Out.Data.Tags = InTags;
     Out.Data.TitleDisplayName = InTitleDisplayName;
     Out.Data.Username = InUsername;
+    Out.Data.XboxInfo = MakeShareable(new PlayFab::ServerModels::FUserXboxInfo(InXboxInfo.Data));
 
     return Out;
 }
@@ -991,10 +995,12 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
     , FString& OutFriendPlayFabId
     , FBPServerUserGameCenterInfo& OutGameCenterInfo
     , FBPServerPlayerProfileModel& OutProfile
+    , FBPServerUserPsnInfo& OutPSNInfo
     , FBPServerUserSteamInfo& OutSteamInfo
     , TArray<FString>& OutTags
     , FString& OutTitleDisplayName
     , FString& OutUsername
+    , FBPServerUserXboxInfo& OutXboxInfo
 )
 {
     OutCurrentMatchmakerLobbyId = In.Data.CurrentMatchmakerLobbyId;
@@ -1002,10 +1008,12 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
     OutFriendPlayFabId = In.Data.FriendPlayFabId;
     if (In.Data.GameCenterInfo.IsValid()) { OutGameCenterInfo.Data = *In.Data.GameCenterInfo; }
     if (In.Data.Profile.IsValid()) { OutProfile.Data = *In.Data.Profile; }
+    if (In.Data.PSNInfo.IsValid()) { OutPSNInfo.Data = *In.Data.PSNInfo; }
     if (In.Data.SteamInfo.IsValid()) { OutSteamInfo.Data = *In.Data.SteamInfo; }
     OutTags = In.Data.Tags;
     OutTitleDisplayName = In.Data.TitleDisplayName;
     OutUsername = In.Data.Username;
+    if (In.Data.XboxInfo.IsValid()) { OutXboxInfo.Data = *In.Data.XboxInfo; }
 
 }
 
@@ -1227,6 +1235,7 @@ FBPServerGetFriendLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetFrien
     , FString InStatisticName
     , bool InUseSpecificVersion
     , int32 InVersion
+    , FString InXboxToken
 )
 {
     FBPServerGetFriendLeaderboardRequest Out = FBPServerGetFriendLeaderboardRequest();
@@ -1239,6 +1248,7 @@ FBPServerGetFriendLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetFrien
     Out.Data.StatisticName = InStatisticName;
     Out.Data.UseSpecificVersion = InUseSpecificVersion;
     Out.Data.Version = InVersion;
+    Out.Data.XboxToken = InXboxToken;
 
     return Out;
 }
@@ -1249,6 +1259,7 @@ FBPServerGetFriendsListRequest UPFServerProxyLibrary::MakeBPServerGetFriendsList
     , bool InIncludeSteamFriends
     , FString InPlayFabId
     , FBPServerPlayerProfileViewConstraints InProfileConstraints
+    , FString InXboxToken
 )
 {
     FBPServerGetFriendsListRequest Out = FBPServerGetFriendsListRequest();
@@ -1256,6 +1267,7 @@ FBPServerGetFriendsListRequest UPFServerProxyLibrary::MakeBPServerGetFriendsList
     Out.Data.IncludeSteamFriends = InIncludeSteamFriends;
     Out.Data.PlayFabId = InPlayFabId;
     Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ServerModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
+    Out.Data.XboxToken = InXboxToken;
 
     return Out;
 }

@@ -9,17 +9,17 @@ DECLARE_LOG_CATEGORY_EXTERN(LogPlayFab, Log, All);
 namespace PlayFab
 {
     class UPlayFabAdminAPI;
-    class UPlayFabMatchmakerAPI;
-    class UPlayFabServerAPI;
     class UPlayFabClientAPI;
     class UPlayFabEntityAPI;
+    class UPlayFabMatchmakerAPI;
+    class UPlayFabServerAPI;
 }
 
 typedef TSharedPtr<class PlayFab::UPlayFabAdminAPI> PlayFabAdminPtr;
-typedef TSharedPtr<class PlayFab::UPlayFabMatchmakerAPI> PlayFabMatchmakerPtr;
-typedef TSharedPtr<class PlayFab::UPlayFabServerAPI> PlayFabServerPtr;
 typedef TSharedPtr<class PlayFab::UPlayFabClientAPI> PlayFabClientPtr;
 typedef TSharedPtr<class PlayFab::UPlayFabEntityAPI> PlayFabEntityPtr;
+typedef TSharedPtr<class PlayFab::UPlayFabMatchmakerAPI> PlayFabMatchmakerPtr;
+typedef TSharedPtr<class PlayFab::UPlayFabServerAPI> PlayFabServerPtr;
 
 /**
 * The public interface to this module.  In most cases, this interface is only public to sibling modules
@@ -52,8 +52,8 @@ public:
 
     virtual FString GetTitleId() const = 0;
     virtual PlayFabAdminPtr GetAdminAPI() const = 0;
-    virtual PlayFabMatchmakerPtr GetMatchmakerAPI() const = 0;
-    virtual PlayFabServerPtr GetServerAPI() const = 0;
     virtual PlayFabClientPtr GetClientAPI() const = 0;
     virtual PlayFabEntityPtr GetEntityAPI() const = 0;
+    virtual PlayFabMatchmakerPtr GetMatchmakerAPI() const = 0;
+    virtual PlayFabServerPtr GetServerAPI() const = 0;
 };

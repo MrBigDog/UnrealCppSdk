@@ -3662,6 +3662,73 @@ bool PlayFab::AdminModels::FDeleteContentRequest::readFromValue(const TSharedPtr
     return HasSucceeded;
 }
 
+PlayFab::AdminModels::FDeleteMasterPlayerAccountRequest::~FDeleteMasterPlayerAccountRequest()
+{
+
+}
+
+void PlayFab::AdminModels::FDeleteMasterPlayerAccountRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteMasterPlayerAccountRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid() && !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (PlayFabIdValue->TryGetString(TmpValue)) { PlayFabId = TmpValue; }
+    }
+
+    return HasSucceeded;
+}
+
+PlayFab::AdminModels::FDeleteMasterPlayerAccountResult::~FDeleteMasterPlayerAccountResult()
+{
+
+}
+
+void PlayFab::AdminModels::FDeleteMasterPlayerAccountResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    if (JobReceiptId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("JobReceiptId")); writer->WriteValue(JobReceiptId); }
+
+    if (TitleIds.Num() != 0)
+    {
+        writer->WriteArrayStart(TEXT("TitleIds"));
+        for (const FString& item : TitleIds)
+            writer->WriteValue(item);
+        writer->WriteArrayEnd();
+    }
+
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteMasterPlayerAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    const TSharedPtr<FJsonValue> JobReceiptIdValue = obj->TryGetField(TEXT("JobReceiptId"));
+    if (JobReceiptIdValue.IsValid() && !JobReceiptIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (JobReceiptIdValue->TryGetString(TmpValue)) { JobReceiptId = TmpValue; }
+    }
+
+    obj->TryGetStringArrayField(TEXT("TitleIds"), TitleIds);
+
+    return HasSucceeded;
+}
+
 PlayFab::AdminModels::FDeletePlayerRequest::~FDeletePlayerRequest()
 {
 
@@ -3998,6 +4065,7 @@ void PlayFab::AdminModels::writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWri
     case EntityTypestitle_player_account: writer->WriteValue(TEXT("title_player_account")); break;
     case EntityTypescharacter: writer->WriteValue(TEXT("character")); break;
     case EntityTypesgroup: writer->WriteValue(TEXT("group")); break;
+    case EntityTypesservice: writer->WriteValue(TEXT("service")); break;
     }
 }
 
@@ -4017,6 +4085,7 @@ AdminModels::EntityTypes PlayFab::AdminModels::readEntityTypesFromValue(const FS
         _EntityTypesMap.Add(TEXT("title_player_account"), EntityTypestitle_player_account);
         _EntityTypesMap.Add(TEXT("character"), EntityTypescharacter);
         _EntityTypesMap.Add(TEXT("group"), EntityTypesgroup);
+        _EntityTypesMap.Add(TEXT("service"), EntityTypesservice);
 
     }
 
@@ -4066,6 +4135,62 @@ bool PlayFab::AdminModels::FEntityKey::readFromValue(const TSharedPtr<FJsonObjec
     {
         FString TmpValue;
         if (TypeStringValue->TryGetString(TmpValue)) { TypeString = TmpValue; }
+    }
+
+    return HasSucceeded;
+}
+
+PlayFab::AdminModels::FExportMasterPlayerDataRequest::~FExportMasterPlayerDataRequest()
+{
+
+}
+
+void PlayFab::AdminModels::FExportMasterPlayerDataRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FExportMasterPlayerDataRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid() && !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (PlayFabIdValue->TryGetString(TmpValue)) { PlayFabId = TmpValue; }
+    }
+
+    return HasSucceeded;
+}
+
+PlayFab::AdminModels::FExportMasterPlayerDataResult::~FExportMasterPlayerDataResult()
+{
+
+}
+
+void PlayFab::AdminModels::FExportMasterPlayerDataResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    if (JobReceiptId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("JobReceiptId")); writer->WriteValue(JobReceiptId); }
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FExportMasterPlayerDataResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    const TSharedPtr<FJsonValue> JobReceiptIdValue = obj->TryGetField(TEXT("JobReceiptId"));
+    if (JobReceiptIdValue.IsValid() && !JobReceiptIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (JobReceiptIdValue->TryGetString(TmpValue)) { JobReceiptId = TmpValue; }
     }
 
     return HasSucceeded;
@@ -4947,6 +5072,64 @@ bool PlayFab::AdminModels::FGetMatchmakerGameModesResult::readFromValue(const TS
         GameModes.Add(FGameModeInfo(CurrentItem->AsObject()));
     }
 
+
+    return HasSucceeded;
+}
+
+PlayFab::AdminModels::FGetPlayedTitleListRequest::~FGetPlayedTitleListRequest()
+{
+
+}
+
+void PlayFab::AdminModels::FGetPlayedTitleListRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayedTitleListRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid() && !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (PlayFabIdValue->TryGetString(TmpValue)) { PlayFabId = TmpValue; }
+    }
+
+    return HasSucceeded;
+}
+
+PlayFab::AdminModels::FGetPlayedTitleListResult::~FGetPlayedTitleListResult()
+{
+
+}
+
+void PlayFab::AdminModels::FGetPlayedTitleListResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+
+    if (TitleIds.Num() != 0)
+    {
+        writer->WriteArrayStart(TEXT("TitleIds"));
+        for (const FString& item : TitleIds)
+            writer->WriteValue(item);
+        writer->WriteArrayEnd();
+    }
+
+
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayedTitleListResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true;
+
+    obj->TryGetStringArrayField(TEXT("TitleIds"), TitleIds);
 
     return HasSucceeded;
 }

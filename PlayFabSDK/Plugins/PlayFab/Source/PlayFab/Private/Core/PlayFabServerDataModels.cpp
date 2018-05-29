@@ -1293,6 +1293,7 @@ void PlayFab::ServerModels::writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWr
     case EntityTypestitle_player_account: writer->WriteValue(TEXT("title_player_account")); break;
     case EntityTypescharacter: writer->WriteValue(TEXT("character")); break;
     case EntityTypesgroup: writer->WriteValue(TEXT("group")); break;
+    case EntityTypesservice: writer->WriteValue(TEXT("service")); break;
     }
 }
 
@@ -1312,6 +1313,7 @@ ServerModels::EntityTypes PlayFab::ServerModels::readEntityTypesFromValue(const 
         _EntityTypesMap.Add(TEXT("title_player_account"), EntityTypestitle_player_account);
         _EntityTypesMap.Add(TEXT("character"), EntityTypescharacter);
         _EntityTypesMap.Add(TEXT("group"), EntityTypesgroup);
+        _EntityTypesMap.Add(TEXT("service"), EntityTypesservice);
 
     }
 
@@ -5017,7 +5019,9 @@ PlayFab::ServerModels::FFriendInfo::~FFriendInfo()
     //if (FacebookInfo != nullptr) delete FacebookInfo;
     //if (GameCenterInfo != nullptr) delete GameCenterInfo;
     //if (Profile != nullptr) delete Profile;
+    //if (PSNInfo != nullptr) delete PSNInfo;
     //if (SteamInfo != nullptr) delete SteamInfo;
+    //if (XboxInfo != nullptr) delete XboxInfo;
 
 }
 
@@ -5035,6 +5039,8 @@ void PlayFab::ServerModels::FFriendInfo::writeJSON(JsonWriter& writer) const
 
     if (Profile.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Profile")); Profile->writeJSON(writer); }
 
+    if (PSNInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PSNInfo")); PSNInfo->writeJSON(writer); }
+
     if (SteamInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("SteamInfo")); SteamInfo->writeJSON(writer); }
 
     if (Tags.Num() != 0)
@@ -5049,6 +5055,8 @@ void PlayFab::ServerModels::FFriendInfo::writeJSON(JsonWriter& writer) const
     if (TitleDisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TitleDisplayName")); writer->WriteValue(TitleDisplayName); }
 
     if (Username.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username); }
+
+    if (XboxInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("XboxInfo")); XboxInfo->writeJSON(writer); }
 
     writer->WriteObjectEnd();
 }
@@ -5089,6 +5097,12 @@ bool PlayFab::ServerModels::FFriendInfo::readFromValue(const TSharedPtr<FJsonObj
         Profile = MakeShareable(new FPlayerProfileModel(ProfileValue->AsObject()));
     }
 
+    const TSharedPtr<FJsonValue> PSNInfoValue = obj->TryGetField(TEXT("PSNInfo"));
+    if (PSNInfoValue.IsValid() && !PSNInfoValue->IsNull())
+    {
+        PSNInfo = MakeShareable(new FUserPsnInfo(PSNInfoValue->AsObject()));
+    }
+
     const TSharedPtr<FJsonValue> SteamInfoValue = obj->TryGetField(TEXT("SteamInfo"));
     if (SteamInfoValue.IsValid() && !SteamInfoValue->IsNull())
     {
@@ -5109,6 +5123,12 @@ bool PlayFab::ServerModels::FFriendInfo::readFromValue(const TSharedPtr<FJsonObj
     {
         FString TmpValue;
         if (UsernameValue->TryGetString(TmpValue)) { Username = TmpValue; }
+    }
+
+    const TSharedPtr<FJsonValue> XboxInfoValue = obj->TryGetField(TEXT("XboxInfo"));
+    if (XboxInfoValue.IsValid() && !XboxInfoValue->IsNull())
+    {
+        XboxInfo = MakeShareable(new FUserXboxInfo(XboxInfoValue->AsObject()));
     }
 
     return HasSucceeded;
@@ -6158,6 +6178,8 @@ void PlayFab::ServerModels::FGetFriendLeaderboardRequest::writeJSON(JsonWriter& 
 
     if (Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 
+    if (XboxToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken); }
+
     writer->WriteObjectEnd();
 }
 
@@ -6227,6 +6249,13 @@ bool PlayFab::ServerModels::FGetFriendLeaderboardRequest::readFromValue(const TS
         if (VersionValue->TryGetNumber(TmpValue)) { Version = TmpValue; }
     }
 
+    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
+    if (XboxTokenValue.IsValid() && !XboxTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if (XboxTokenValue->TryGetString(TmpValue)) { XboxToken = TmpValue; }
+    }
+
     return HasSucceeded;
 }
 
@@ -6247,6 +6276,8 @@ void PlayFab::ServerModels::FGetFriendsListRequest::writeJSON(JsonWriter& writer
     writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
 
     if (ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
+
+    if (XboxToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken); }
 
     writer->WriteObjectEnd();
 }
@@ -6280,6 +6311,13 @@ bool PlayFab::ServerModels::FGetFriendsListRequest::readFromValue(const TSharedP
     if (ProfileConstraintsValue.IsValid() && !ProfileConstraintsValue->IsNull())
     {
         ProfileConstraints = MakeShareable(new FPlayerProfileViewConstraints(ProfileConstraintsValue->AsObject()));
+    }
+
+    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
+    if (XboxTokenValue.IsValid() && !XboxTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if (XboxTokenValue->TryGetString(TmpValue)) { XboxToken = TmpValue; }
     }
 
     return HasSucceeded;

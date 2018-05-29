@@ -2220,7 +2220,8 @@ namespace ClientModels
         EntityTypesmaster_player_account,
         EntityTypestitle_player_account,
         EntityTypescharacter,
-        EntityTypesgroup
+        EntityTypesgroup,
+        EntityTypesservice
     };
 
     PLAYFAB_API void writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWriter& writer);
@@ -3094,6 +3095,37 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 
+    struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
+    {
+        // [optional] PSN account ID
+        FString PsnAccountId;
+
+        // [optional] PSN online ID
+        FString PsnOnlineId;
+
+        FUserPsnInfo() :
+            FPlayFabBaseModel(),
+            PsnAccountId(),
+            PsnOnlineId()
+            {}
+
+        FUserPsnInfo(const FUserPsnInfo& src) :
+            FPlayFabBaseModel(),
+            PsnAccountId(src.PsnAccountId),
+            PsnOnlineId(src.PsnOnlineId)
+            {}
+
+        FUserPsnInfo(const TSharedPtr<FJsonObject>& obj) : FUserPsnInfo()
+        {
+            readFromValue(obj);
+        }
+
+        ~FUserPsnInfo();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
     enum TitleActivationStatus
     {
         TitleActivationStatusNone,
@@ -3148,6 +3180,32 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 
+    struct PLAYFAB_API FUserXboxInfo : public FPlayFabBaseModel
+    {
+        // [optional] XBox user ID
+        FString XboxUserId;
+
+        FUserXboxInfo() :
+            FPlayFabBaseModel(),
+            XboxUserId()
+            {}
+
+        FUserXboxInfo(const FUserXboxInfo& src) :
+            FPlayFabBaseModel(),
+            XboxUserId(src.XboxUserId)
+            {}
+
+        FUserXboxInfo(const TSharedPtr<FJsonObject>& obj) : FUserXboxInfo()
+        {
+            readFromValue(obj);
+        }
+
+        ~FUserXboxInfo();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
     struct PLAYFAB_API FFriendInfo : public FPlayFabBaseModel
     {
         // [optional] Unique lobby identifier of the Game Server Instance to which this player is currently connected.
@@ -3165,6 +3223,9 @@ namespace ClientModels
         // [optional] The profile of the user, if requested.
         TSharedPtr<FPlayerProfileModel> Profile;
 
+        // [optional] Available PSN information, if the user and PlayFab friend are both connected to PSN.
+        TSharedPtr<FUserPsnInfo> PSNInfo;
+
         // [optional] Available Steam information (if the user and PlayFab friend are also connected in Steam).
         TSharedPtr<FUserSteamInfo> SteamInfo;
 
@@ -3176,6 +3237,9 @@ namespace ClientModels
         // [optional] PlayFab unique username for this friend.
         FString Username;
 
+        // [optional] Available Xbox information, if the user and PlayFab friend are both connected to Xbox Live.
+        TSharedPtr<FUserXboxInfo> XboxInfo;
+
         FFriendInfo() :
             FPlayFabBaseModel(),
             CurrentMatchmakerLobbyId(),
@@ -3183,10 +3247,12 @@ namespace ClientModels
             FriendPlayFabId(),
             GameCenterInfo(nullptr),
             Profile(nullptr),
+            PSNInfo(nullptr),
             SteamInfo(nullptr),
             Tags(),
             TitleDisplayName(),
-            Username()
+            Username(),
+            XboxInfo(nullptr)
             {}
 
         FFriendInfo(const FFriendInfo& src) :
@@ -3196,10 +3262,12 @@ namespace ClientModels
             FriendPlayFabId(src.FriendPlayFabId),
             GameCenterInfo(src.GameCenterInfo.IsValid() ? MakeShareable(new FUserGameCenterInfo(*src.GameCenterInfo)) : nullptr),
             Profile(src.Profile.IsValid() ? MakeShareable(new FPlayerProfileModel(*src.Profile)) : nullptr),
+            PSNInfo(src.PSNInfo.IsValid() ? MakeShareable(new FUserPsnInfo(*src.PSNInfo)) : nullptr),
             SteamInfo(src.SteamInfo.IsValid() ? MakeShareable(new FUserSteamInfo(*src.SteamInfo)) : nullptr),
             Tags(src.Tags),
             TitleDisplayName(src.TitleDisplayName),
-            Username(src.Username)
+            Username(src.Username),
+            XboxInfo(src.XboxInfo.IsValid() ? MakeShareable(new FUserXboxInfo(*src.XboxInfo)) : nullptr)
             {}
 
         FFriendInfo(const TSharedPtr<FJsonObject>& obj) : FFriendInfo()
@@ -3598,37 +3666,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 
-    struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
-    {
-        // [optional] PSN account ID
-        FString PsnAccountId;
-
-        // [optional] PSN online ID
-        FString PsnOnlineId;
-
-        FUserPsnInfo() :
-            FPlayFabBaseModel(),
-            PsnAccountId(),
-            PsnOnlineId()
-            {}
-
-        FUserPsnInfo(const FUserPsnInfo& src) :
-            FPlayFabBaseModel(),
-            PsnAccountId(src.PsnAccountId),
-            PsnOnlineId(src.PsnOnlineId)
-            {}
-
-        FUserPsnInfo(const TSharedPtr<FJsonObject>& obj) : FUserPsnInfo()
-        {
-            readFromValue(obj);
-        }
-
-        ~FUserPsnInfo();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-
     enum UserOrigination
     {
         UserOriginationOrganic,
@@ -3748,32 +3785,6 @@ namespace ClientModels
         }
 
         ~FUserTwitchInfo();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-
-    struct PLAYFAB_API FUserXboxInfo : public FPlayFabBaseModel
-    {
-        // [optional] XBox user ID
-        FString XboxUserId;
-
-        FUserXboxInfo() :
-            FPlayFabBaseModel(),
-            XboxUserId()
-            {}
-
-        FUserXboxInfo(const FUserXboxInfo& src) :
-            FPlayFabBaseModel(),
-            XboxUserId(src.XboxUserId)
-            {}
-
-        FUserXboxInfo(const TSharedPtr<FJsonObject>& obj) : FUserXboxInfo()
-        {
-            readFromValue(obj);
-        }
-
-        ~FUserXboxInfo();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4509,6 +4520,9 @@ namespace ClientModels
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
+        // [optional] Xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
+        FString XboxToken;
+
         FGetFriendLeaderboardAroundPlayerRequest() :
             FPlayFabBaseModel(),
             IncludeFacebookFriends(),
@@ -4518,7 +4532,8 @@ namespace ClientModels
             ProfileConstraints(nullptr),
             StatisticName(),
             UseSpecificVersion(),
-            Version()
+            Version(),
+            XboxToken()
             {}
 
         FGetFriendLeaderboardAroundPlayerRequest(const FGetFriendLeaderboardAroundPlayerRequest& src) :
@@ -4530,7 +4545,8 @@ namespace ClientModels
             ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
             StatisticName(src.StatisticName),
             UseSpecificVersion(src.UseSpecificVersion),
-            Version(src.Version)
+            Version(src.Version),
+            XboxToken(src.XboxToken)
             {}
 
         FGetFriendLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerRequest()
@@ -4655,6 +4671,9 @@ namespace ClientModels
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
+        // [optional] Xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
+        FString XboxToken;
+
         FGetFriendLeaderboardRequest() :
             FPlayFabBaseModel(),
             IncludeFacebookFriends(),
@@ -4664,7 +4683,8 @@ namespace ClientModels
             StartPosition(0),
             StatisticName(),
             UseSpecificVersion(),
-            Version()
+            Version(),
+            XboxToken()
             {}
 
         FGetFriendLeaderboardRequest(const FGetFriendLeaderboardRequest& src) :
@@ -4676,7 +4696,8 @@ namespace ClientModels
             StartPosition(src.StartPosition),
             StatisticName(src.StatisticName),
             UseSpecificVersion(src.UseSpecificVersion),
-            Version(src.Version)
+            Version(src.Version),
+            XboxToken(src.XboxToken)
             {}
 
         FGetFriendLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardRequest()
@@ -4705,18 +4726,23 @@ namespace ClientModels
          */
         TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 
+        // [optional] Xbox token if Xbox friends should be included. Requires Xbox be configured on PlayFab.
+        FString XboxToken;
+
         FGetFriendsListRequest() :
             FPlayFabBaseModel(),
             IncludeFacebookFriends(),
             IncludeSteamFriends(),
-            ProfileConstraints(nullptr)
+            ProfileConstraints(nullptr),
+            XboxToken()
             {}
 
         FGetFriendsListRequest(const FGetFriendsListRequest& src) :
             FPlayFabBaseModel(),
             IncludeFacebookFriends(src.IncludeFacebookFriends),
             IncludeSteamFriends(src.IncludeSteamFriends),
-            ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
+            ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
+            XboxToken(src.XboxToken)
             {}
 
         FGetFriendsListRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendsListRequest()

@@ -2400,6 +2400,65 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 
+    struct PLAYFAB_API FDeleteMasterPlayerAccountRequest : public FPlayFabBaseModel
+    {
+        // Unique PlayFab assigned ID of the user on whom the operation will be performed.
+        FString PlayFabId;
+
+        FDeleteMasterPlayerAccountRequest() :
+            FPlayFabBaseModel(),
+            PlayFabId()
+            {}
+
+        FDeleteMasterPlayerAccountRequest(const FDeleteMasterPlayerAccountRequest& src) :
+            FPlayFabBaseModel(),
+            PlayFabId(src.PlayFabId)
+            {}
+
+        FDeleteMasterPlayerAccountRequest(const TSharedPtr<FJsonObject>& obj) : FDeleteMasterPlayerAccountRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FDeleteMasterPlayerAccountRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
+    struct PLAYFAB_API FDeleteMasterPlayerAccountResult : public FPlayFabBaseModel
+    {
+        /**
+         * [optional] A notification email with this job receipt Id will be sent to the title notification email address when deletion is
+         * complete.
+         */
+        FString JobReceiptId;
+
+        // [optional] List of titles from which the player's data will be deleted.
+        TArray<FString> TitleIds;
+        FDeleteMasterPlayerAccountResult() :
+            FPlayFabBaseModel(),
+            JobReceiptId(),
+            TitleIds()
+            {}
+
+        FDeleteMasterPlayerAccountResult(const FDeleteMasterPlayerAccountResult& src) :
+            FPlayFabBaseModel(),
+            JobReceiptId(src.JobReceiptId),
+            TitleIds(src.TitleIds)
+            {}
+
+        FDeleteMasterPlayerAccountResult(const TSharedPtr<FJsonObject>& obj) : FDeleteMasterPlayerAccountResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FDeleteMasterPlayerAccountResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
     struct PLAYFAB_API FDeletePlayerRequest : public FPlayFabBaseModel
     {
         // Unique PlayFab assigned ID of the user on whom the operation will be performed.
@@ -2705,7 +2764,8 @@ namespace AdminModels
         EntityTypesmaster_player_account,
         EntityTypestitle_player_account,
         EntityTypescharacter,
-        EntityTypesgroup
+        EntityTypesgroup,
+        EntityTypesservice
     };
 
     PLAYFAB_API void writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWriter& writer);
@@ -2743,6 +2803,61 @@ namespace AdminModels
         }
 
         ~FEntityKey();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
+    struct PLAYFAB_API FExportMasterPlayerDataRequest : public FPlayFabBaseModel
+    {
+        // Unique PlayFab assigned ID of the user on whom the operation will be performed.
+        FString PlayFabId;
+
+        FExportMasterPlayerDataRequest() :
+            FPlayFabBaseModel(),
+            PlayFabId()
+            {}
+
+        FExportMasterPlayerDataRequest(const FExportMasterPlayerDataRequest& src) :
+            FPlayFabBaseModel(),
+            PlayFabId(src.PlayFabId)
+            {}
+
+        FExportMasterPlayerDataRequest(const TSharedPtr<FJsonObject>& obj) : FExportMasterPlayerDataRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FExportMasterPlayerDataRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
+    struct PLAYFAB_API FExportMasterPlayerDataResult : public FPlayFabBaseModel
+    {
+        /**
+         * [optional] An email with this job receipt Id containing the export download link will be sent to the title notification email
+         * address when the export is complete.
+         */
+        FString JobReceiptId;
+
+        FExportMasterPlayerDataResult() :
+            FPlayFabBaseModel(),
+            JobReceiptId()
+            {}
+
+        FExportMasterPlayerDataResult(const FExportMasterPlayerDataResult& src) :
+            FPlayFabBaseModel(),
+            JobReceiptId(src.JobReceiptId)
+            {}
+
+        FExportMasterPlayerDataResult(const TSharedPtr<FJsonObject>& obj) : FExportMasterPlayerDataResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FExportMasterPlayerDataResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3439,6 +3554,57 @@ namespace AdminModels
         }
 
         ~FGetMatchmakerGameModesResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
+    struct PLAYFAB_API FGetPlayedTitleListRequest : public FPlayFabBaseModel
+    {
+        // Unique PlayFab assigned ID of the user on whom the operation will be performed.
+        FString PlayFabId;
+
+        FGetPlayedTitleListRequest() :
+            FPlayFabBaseModel(),
+            PlayFabId()
+            {}
+
+        FGetPlayedTitleListRequest(const FGetPlayedTitleListRequest& src) :
+            FPlayFabBaseModel(),
+            PlayFabId(src.PlayFabId)
+            {}
+
+        FGetPlayedTitleListRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayedTitleListRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPlayedTitleListRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+
+    struct PLAYFAB_API FGetPlayedTitleListResult : public FPlayFabBaseModel
+    {
+        // [optional] List of titles the player has played
+        TArray<FString> TitleIds;
+        FGetPlayedTitleListResult() :
+            FPlayFabBaseModel(),
+            TitleIds()
+            {}
+
+        FGetPlayedTitleListResult(const FGetPlayedTitleListResult& src) :
+            FPlayFabBaseModel(),
+            TitleIds(src.TitleIds)
+            {}
+
+        FGetPlayedTitleListResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayedTitleListResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPlayedTitleListResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
