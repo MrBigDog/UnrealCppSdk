@@ -3,13 +3,13 @@
     "FriendlyName": "PlayFab Cpp Sdk CPP Proxy",
     "Version": 0,
     "EngineVersion": "4.19",
-    "VersionName": "0.0.180529",
+    "VersionName": "0.0.180618",
     "CreatedBy": "PlayFab and Phoenix Labs",
     "CreatedByURL": "https://playfab.com/",
     "DocsURL": "https://api.playfab.com/",
     "SupportURL": "https://community.playfab.com/index.html",
     "Category": "PlayFab",
-    "Description": "PlayFab CPP SDK for Unreal Engine 4. Current API version: 0.0.180529",
+    "Description": "PlayFab CPP SDK for Unreal Engine 4. Current API version: 0.0.180618",
     "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android" ],
     "Modules": [
         {

@@ -1783,19 +1783,6 @@ public:
             , FString& OutVirtualCurrency
 );
 
-    // NameIdentifier
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
-        static FBPClientNameIdentifier MakeBPClientNameIdentifier(
-            FString InId
-            , FString InName
-        );
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-        static void BreakBPClientNameIdentifier(
-            const FBPClientNameIdentifier& In
-            , FString& OutId
-            , FString& OutName
-);
-
     // OpenTradeRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
         static FBPClientOpenTradeRequest MakeBPClientOpenTradeRequest(

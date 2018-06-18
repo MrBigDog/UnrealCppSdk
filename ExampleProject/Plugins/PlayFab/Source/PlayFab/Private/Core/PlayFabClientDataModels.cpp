@@ -12715,43 +12715,6 @@ bool PlayFab::ClientModels::FModifyUserVirtualCurrencyResult::readFromValue(cons
     return HasSucceeded;
 }
 
-PlayFab::ClientModels::FNameIdentifier::~FNameIdentifier()
-{
-
-}
-
-void PlayFab::ClientModels::FNameIdentifier::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-
-    if (Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
-
-    if (Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
-
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FNameIdentifier::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true;
-
-    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
-    if (IdValue.IsValid() && !IdValue->IsNull())
-    {
-        FString TmpValue;
-        if (IdValue->TryGetString(TmpValue)) { Id = TmpValue; }
-    }
-
-    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
-    if (NameValue.IsValid() && !NameValue->IsNull())
-    {
-        FString TmpValue;
-        if (NameValue->TryGetString(TmpValue)) { Name = TmpValue; }
-    }
-
-    return HasSucceeded;
-}
-
 PlayFab::ClientModels::FOpenTradeRequest::~FOpenTradeRequest()
 {
 

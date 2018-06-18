@@ -26,26 +26,6 @@ public:
     PlayFab::MatchmakerModels::FAuthUserResponse Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFMatchmakerProxyLibrary.MakeBPMatchmakerDeregisterGameRequest"))
-struct FBPMatchmakerDeregisterGameRequest
-{
-    GENERATED_BODY()
-public:
-    FBPMatchmakerDeregisterGameRequest() {};
-    FBPMatchmakerDeregisterGameRequest(PlayFab::MatchmakerModels::FDeregisterGameRequest InData) : Data(InData) {};
-    PlayFab::MatchmakerModels::FDeregisterGameRequest Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFMatchmakerProxyLibrary.BreakBPMatchmakerDeregisterGameResponse"))
-struct FBPMatchmakerDeregisterGameResponse
-{
-    GENERATED_BODY()
-public:
-    FBPMatchmakerDeregisterGameResponse() {};
-    FBPMatchmakerDeregisterGameResponse(PlayFab::MatchmakerModels::FDeregisterGameResponse InData) : Data(InData) {};
-    PlayFab::MatchmakerModels::FDeregisterGameResponse Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFMatchmakerProxyLibrary.MakeBPMatchmakerItemInstance", HasNativeBreak = "PlayFabProxy.PFMatchmakerProxyLibrary.BreakBPMatchmakerItemInstance"))
 struct FBPMatchmakerItemInstance
 {
@@ -108,26 +88,6 @@ enum class EBPMatchmakerRegion : uint8
     Region_Australia UMETA(DisplayName = "Australia")
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFMatchmakerProxyLibrary.MakeBPMatchmakerRegisterGameRequest"))
-struct FBPMatchmakerRegisterGameRequest
-{
-    GENERATED_BODY()
-public:
-    FBPMatchmakerRegisterGameRequest() {};
-    FBPMatchmakerRegisterGameRequest(PlayFab::MatchmakerModels::FRegisterGameRequest InData) : Data(InData) {};
-    PlayFab::MatchmakerModels::FRegisterGameRequest Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFMatchmakerProxyLibrary.BreakBPMatchmakerRegisterGameResponse"))
-struct FBPMatchmakerRegisterGameResponse
-{
-    GENERATED_BODY()
-public:
-    FBPMatchmakerRegisterGameResponse() {};
-    FBPMatchmakerRegisterGameResponse(PlayFab::MatchmakerModels::FRegisterGameResponse InData) : Data(InData) {};
-    PlayFab::MatchmakerModels::FRegisterGameResponse Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFMatchmakerProxyLibrary.MakeBPMatchmakerStartGameRequest"))
 struct FBPMatchmakerStartGameRequest
 {
@@ -179,10 +139,8 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerAuthUserResponseDelegate, const FBPMatchmakerAuthUserResponse&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerDeregisterGameResponseDelegate, const FBPMatchmakerDeregisterGameResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerPlayerJoinedResponseDelegate, const FBPMatchmakerPlayerJoinedResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerPlayerLeftResponseDelegate, const FBPMatchmakerPlayerLeftResponse&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerRegisterGameResponseDelegate, const FBPMatchmakerRegisterGameResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerStartGameResponseDelegate, const FBPMatchmakerStartGameResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPMatchmakerUserInfoResponseDelegate, const FBPMatchmakerUserInfoResponse&, Result);
 

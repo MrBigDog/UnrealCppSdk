@@ -3945,61 +3945,6 @@ bool PlayFab::AdminModels::FDeleteTitleResult::readFromValue(const TSharedPtr<FJ
     return HasSucceeded;
 }
 
-PlayFab::AdminModels::FDeleteUsersRequest::~FDeleteUsersRequest()
-{
-
-}
-
-void PlayFab::AdminModels::FDeleteUsersRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-
-    writer->WriteArrayStart(TEXT("PlayFabIds"));
-    for (const FString& item : PlayFabIds)
-        writer->WriteValue(item);
-    writer->WriteArrayEnd();
-
-
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FDeleteUsersRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true;
-
-    HasSucceeded &= obj->TryGetStringArrayField(TEXT("PlayFabIds"), PlayFabIds);
-
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid() && !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if (TitleIdValue->TryGetString(TmpValue)) { TitleId = TmpValue; }
-    }
-
-    return HasSucceeded;
-}
-
-PlayFab::AdminModels::FDeleteUsersResult::~FDeleteUsersResult()
-{
-
-}
-
-void PlayFab::AdminModels::FDeleteUsersResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FDeleteUsersResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true;
-
-    return HasSucceeded;
-}
-
 void PlayFab::AdminModels::writeEffectTypeEnumJSON(EffectType enumVal, JsonWriter& writer)
 {
     switch (enumVal)

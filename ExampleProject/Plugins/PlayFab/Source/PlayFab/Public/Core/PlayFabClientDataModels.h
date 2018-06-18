@@ -8995,37 +8995,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 
-    struct PLAYFAB_API FNameIdentifier : public FPlayFabBaseModel
-    {
-        // [optional] undefined
-        FString Id;
-
-        // [optional] undefined
-        FString Name;
-
-        FNameIdentifier() :
-            FPlayFabBaseModel(),
-            Id(),
-            Name()
-            {}
-
-        FNameIdentifier(const FNameIdentifier& src) :
-            FPlayFabBaseModel(),
-            Id(src.Id),
-            Name(src.Name)
-            {}
-
-        FNameIdentifier(const TSharedPtr<FJsonObject>& obj) : FNameIdentifier()
-        {
-            readFromValue(obj);
-        }
-
-        ~FNameIdentifier();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-
     struct PLAYFAB_API FOpenTradeRequest : public FPlayFabBaseModel
     {
         /**

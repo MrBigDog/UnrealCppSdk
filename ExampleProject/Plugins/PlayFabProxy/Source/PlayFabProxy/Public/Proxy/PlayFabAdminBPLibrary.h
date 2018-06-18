@@ -579,18 +579,6 @@ public:
             const FBPAdminDeleteTitleResult& In
 );
 
-    // DeleteUsersRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
-        static FBPAdminDeleteUsersRequest MakeBPAdminDeleteUsersRequest(
-            TArray<FString> InPlayFabIds
-        );
-
-    // DeleteUsersResult
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-        static void BreakBPAdminDeleteUsersResult(
-            const FBPAdminDeleteUsersResult& In
-);
-
     // EmptyResult
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
         static void BreakBPAdminEmptyResult(

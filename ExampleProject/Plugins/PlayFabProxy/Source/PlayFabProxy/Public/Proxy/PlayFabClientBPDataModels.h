@@ -2372,16 +2372,6 @@ public:
     PlayFab::ClientModels::FModifyUserVirtualCurrencyResult Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientNameIdentifier", HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientNameIdentifier"))
-struct FBPClientNameIdentifier
-{
-    GENERATED_BODY()
-public:
-    FBPClientNameIdentifier() {};
-    FBPClientNameIdentifier(PlayFab::ClientModels::FNameIdentifier InData) : Data(InData) {};
-    PlayFab::ClientModels::FNameIdentifier Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientOpenTradeRequest"))
 struct FBPClientOpenTradeRequest
 {

@@ -28,25 +28,6 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserResponse(
 
 }
 
-// DeregisterGameRequest
-FBPMatchmakerDeregisterGameRequest UPFMatchmakerProxyLibrary::MakeBPMatchmakerDeregisterGameRequest(
-    FString InLobbyId
-)
-{
-    FBPMatchmakerDeregisterGameRequest Out = FBPMatchmakerDeregisterGameRequest();
-    Out.Data.LobbyId = InLobbyId;
-
-    return Out;
-}
-
-// DeregisterGameResponse
-void UPFMatchmakerProxyLibrary::BreakBPMatchmakerDeregisterGameResponse(
-    const FBPMatchmakerDeregisterGameResponse& In
-)
-{
-
-}
-
 // ItemInstance
 FBPMatchmakerItemInstance UPFMatchmakerProxyLibrary::MakeBPMatchmakerItemInstance(
     FString InAnnotation
@@ -161,41 +142,6 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerPlayerLeftResponse(
     const FBPMatchmakerPlayerLeftResponse& In
 )
 {
-
-}
-
-// RegisterGameRequest
-FBPMatchmakerRegisterGameRequest UPFMatchmakerProxyLibrary::MakeBPMatchmakerRegisterGameRequest(
-    FString InBuild
-    , FString InGameMode
-    , FString InLobbyId
-    , EBPMatchmakerRegion InRegion
-    , FString InServerHost
-    , FString InServerIPV6Address
-    , FString InServerPort
-    , TMap<FString, FString> InTags
-)
-{
-    FBPMatchmakerRegisterGameRequest Out = FBPMatchmakerRegisterGameRequest();
-    Out.Data.Build = InBuild;
-    Out.Data.GameMode = InGameMode;
-    Out.Data.LobbyId = InLobbyId;
-    Out.Data.pfRegion = static_cast<PlayFab::MatchmakerModels::Region>(static_cast<uint8>(InRegion));
-    Out.Data.ServerHost = InServerHost;
-    Out.Data.ServerIPV6Address = InServerIPV6Address;
-    Out.Data.ServerPort = InServerPort;
-    Out.Data.Tags = InTags;
-
-    return Out;
-}
-
-// RegisterGameResponse
-void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegisterGameResponse(
-    const FBPMatchmakerRegisterGameResponse& In
-    , FString& OutLobbyId
-)
-{
-    OutLobbyId = In.Data.LobbyId;
 
 }
 

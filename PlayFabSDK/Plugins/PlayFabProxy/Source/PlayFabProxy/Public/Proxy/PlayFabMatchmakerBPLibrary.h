@@ -29,18 +29,6 @@ public:
             , FString& OutPlayFabId
 );
 
-    // DeregisterGameRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeMakeFunc))
-        static FBPMatchmakerDeregisterGameRequest MakeBPMatchmakerDeregisterGameRequest(
-            FString InLobbyId
-        );
-
-    // DeregisterGameResponse
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
-        static void BreakBPMatchmakerDeregisterGameResponse(
-            const FBPMatchmakerDeregisterGameResponse& In
-);
-
     // ItemInstance
     UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeMakeFunc))
         static FBPMatchmakerItemInstance MakeBPMatchmakerItemInstance(
@@ -104,26 +92,6 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
         static void BreakBPMatchmakerPlayerLeftResponse(
             const FBPMatchmakerPlayerLeftResponse& In
-);
-
-    // RegisterGameRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeMakeFunc))
-        static FBPMatchmakerRegisterGameRequest MakeBPMatchmakerRegisterGameRequest(
-            FString InBuild
-            , FString InGameMode
-            , FString InLobbyId
-            , EBPMatchmakerRegion InRegion
-            , FString InServerHost
-            , FString InServerIPV6Address
-            , FString InServerPort
-            , TMap<FString, FString> InTags
-        );
-
-    // RegisterGameResponse
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
-        static void BreakBPMatchmakerRegisterGameResponse(
-            const FBPMatchmakerRegisterGameResponse& In
-            , FString& OutLobbyId
 );
 
     // StartGameRequest

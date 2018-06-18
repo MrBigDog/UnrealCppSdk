@@ -963,26 +963,6 @@ public:
     PlayFab::AdminModels::FDeleteTitleResult Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminDeleteUsersRequest"))
-struct FBPAdminDeleteUsersRequest
-{
-    GENERATED_BODY()
-public:
-    FBPAdminDeleteUsersRequest() {};
-    FBPAdminDeleteUsersRequest(PlayFab::AdminModels::FDeleteUsersRequest InData) : Data(InData) {};
-    PlayFab::AdminModels::FDeleteUsersRequest Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteUsersResult"))
-struct FBPAdminDeleteUsersResult
-{
-    GENERATED_BODY()
-public:
-    FBPAdminDeleteUsersResult() {};
-    FBPAdminDeleteUsersResult(PlayFab::AdminModels::FDeleteUsersResult InData) : Data(InData) {};
-    PlayFab::AdminModels::FDeleteUsersResult Data;
-};
-
 UENUM(BlueprintType)
 enum class EBPAdminEffectType : uint8
 {
@@ -3204,7 +3184,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerResultDelegate, 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerSharedSecretResultDelegate, const FBPAdminDeletePlayerSharedSecretResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteStoreResultDelegate, const FBPAdminDeleteStoreResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteTitleResultDelegate, const FBPAdminDeleteTitleResult&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteUsersResultDelegate, const FBPAdminDeleteUsersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEmptyResultDelegate, const FBPAdminEmptyResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminExecuteCloudScriptResultDelegate, const FBPAdminExecuteCloudScriptResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminExportMasterPlayerDataResultDelegate, const FBPAdminExportMasterPlayerDataResult&, Result);

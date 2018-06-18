@@ -3301,29 +3301,6 @@ void UPFClientProxyLibrary::BreakBPClientModifyUserVirtualCurrencyResult(
 
 }
 
-// NameIdentifier
-FBPClientNameIdentifier UPFClientProxyLibrary::MakeBPClientNameIdentifier(
-    FString InId
-    , FString InName
-)
-{
-    FBPClientNameIdentifier Out = FBPClientNameIdentifier();
-    Out.Data.Id = InId;
-    Out.Data.Name = InName;
-
-    return Out;
-}
-void UPFClientProxyLibrary::BreakBPClientNameIdentifier(
-    const FBPClientNameIdentifier& In
-    , FString& OutId
-    , FString& OutName
-)
-{
-    OutId = In.Data.Id;
-    OutName = In.Data.Name;
-
-}
-
 // OpenTradeRequest
 FBPClientOpenTradeRequest UPFClientProxyLibrary::MakeBPClientOpenTradeRequest(
     TArray<FString> InAllowedPlayerIds

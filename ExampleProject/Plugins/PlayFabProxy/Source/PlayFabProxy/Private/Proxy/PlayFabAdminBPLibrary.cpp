@@ -1055,25 +1055,6 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteTitleResult(
 
 }
 
-// DeleteUsersRequest
-FBPAdminDeleteUsersRequest UPFAdminProxyLibrary::MakeBPAdminDeleteUsersRequest(
-    TArray<FString> InPlayFabIds
-)
-{
-    FBPAdminDeleteUsersRequest Out = FBPAdminDeleteUsersRequest();
-    Out.Data.PlayFabIds = InPlayFabIds;
-
-    return Out;
-}
-
-// DeleteUsersResult
-void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersResult(
-    const FBPAdminDeleteUsersResult& In
-)
-{
-
-}
-
 // EmptyResult
 void UPFAdminProxyLibrary::BreakBPAdminEmptyResult(
     const FBPAdminEmptyResult& In

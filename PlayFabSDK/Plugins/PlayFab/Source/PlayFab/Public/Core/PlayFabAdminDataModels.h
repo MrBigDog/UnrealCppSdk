@@ -82,10 +82,10 @@ namespace AdminModels
 
     struct PLAYFAB_API FNameIdentifier : public FPlayFabBaseModel
     {
-        // [optional] undefined
+        // [optional] Id Identifier, if present
         FString Id;
 
-        // [optional] undefined
+        // [optional] Name Identifier, if present
         FString Name;
 
         FNameIdentifier() :
@@ -2668,60 +2668,6 @@ namespace AdminModels
         }
 
         ~FDeleteTitleResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-
-    struct PLAYFAB_API FDeleteUsersRequest : public FPlayFabBaseModel
-    {
-        // An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
-        TArray<FString> PlayFabIds;
-        /**
-         * Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a
-         * title has been selected.
-         */
-        FString TitleId;
-
-        FDeleteUsersRequest() :
-            FPlayFabBaseModel(),
-            PlayFabIds(),
-            TitleId()
-            {}
-
-        FDeleteUsersRequest(const FDeleteUsersRequest& src) :
-            FPlayFabBaseModel(),
-            PlayFabIds(src.PlayFabIds),
-            TitleId(src.TitleId)
-            {}
-
-        FDeleteUsersRequest(const TSharedPtr<FJsonObject>& obj) : FDeleteUsersRequest()
-        {
-            readFromValue(obj);
-        }
-
-        ~FDeleteUsersRequest();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-
-    struct PLAYFAB_API FDeleteUsersResult : public FPlayFabBaseModel
-    {
-        FDeleteUsersResult() :
-            FPlayFabBaseModel()
-            {}
-
-        FDeleteUsersResult(const FDeleteUsersResult& src) :
-            FPlayFabBaseModel()
-            {}
-
-        FDeleteUsersResult(const TSharedPtr<FJsonObject>& obj) : FDeleteUsersResult()
-        {
-            readFromValue(obj);
-        }
-
-        ~FDeleteUsersResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7713,7 +7659,8 @@ namespace AdminModels
         FString PlayFabId;
 
         /**
-         * [optional] Reason for refund. In the case of Facebook this must match one of their refund or dispute resolution enums (See:
+         * [optional] The Reason parameter should correspond with the payment providers reason field, if they require one such as Facebook. In
+         * the case of Facebook this must match one of their refund or dispute resolution enums (See:
          * https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
          */
         FString Reason;
@@ -8070,7 +8017,8 @@ namespace AdminModels
         FString PlayFabId;
 
         /**
-         * [optional] Reason for refund. In the case of Facebook this must match one of their refund or dispute resolution enums (See:
+         * [optional] The Reason parameter should correspond with the payment providers reason field, if they require one such as Facebook. In
+         * the case of Facebook this must match one of their refund or dispute resolution enums (See:
          * https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
          */
         FString Reason;
