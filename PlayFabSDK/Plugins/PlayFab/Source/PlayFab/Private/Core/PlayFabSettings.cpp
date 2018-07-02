@@ -1,9 +1,14 @@
+//////////////////////////////////////////////////////
+// Copyright (C) Microsoft. 2018. All rights reserved.
+//////////////////////////////////////////////////////
+
+
 #include "PlayFabSettings.h"
 
 namespace PlayFab
 {
     const FString PlayFabSettings::sdkVersion = "0.0.180618";
-    const FString PlayFabSettings::buildIdentifier = "jbuild_unrealcppsdk_0";
+    const FString PlayFabSettings::buildIdentifier = "jbuild_unrealcppsdk_1";
     const FString PlayFabSettings::versionString = "UE4SDK-0.0.180618";
 
     bool PlayFabSettings::useDevelopmentEnvironment = false;

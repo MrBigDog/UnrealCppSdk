@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////////
+// Copyright (C) Microsoft. 2018. All rights reserved.
+//////////////////////////////////////////////////////
+
+
 #include "PlayFabResultHandler.h"
 #include "PlayFabSettings.h"
 #include "PlayFab.h"
